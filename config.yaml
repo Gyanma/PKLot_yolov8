@@ -1,0 +1,7 @@
+path: D:\Progetto\Progetto finale Sysag\PKLot.v2-640.yolov8  # dataset root dir
+train: train/images  # train images (relative to 'path')
+val:   valid/images # val images (relative to 'path')
+
+# Classes
+nc: 2
+names: ['space-empty', 'space-occupied']
