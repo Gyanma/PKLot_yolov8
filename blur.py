@@ -1,23 +1,17 @@
 import cv2
-import os
 from ultralytics import YOLO
 
-# Load a custom trained model
-model = YOLO('D:/Progetto/Progetto finale Sysag/train43/weights/best.pt')
+class ImageProcessor:
+    def __init__(self, model_path, image_path):
+        self.model = YOLO(model_path)
+        self.image_path = image_path
 
-# Path to the folder containing images
-image_folder = 'C:/Users/gmrut/Desktop/Imgs'
-
-# Iterate over images in the folder
-for image_filename in os.listdir(image_folder):
-    if image_filename.endswith(('.jpg', '.png', '.jpeg')):
-        image_path = os.path.join(image_folder, image_filename)
-
-        # Run inference on the image
-        results = model([image_path])
+    def process(self):
+        # Run batched inference on a list of images
+        results = self.model([self.image_path])
 
         # Load the image
-        img = cv2.imread(image_path)
+        img = cv2.imread(self.image_path)
 
         # Process results list
         for result in results:
@@ -41,6 +35,11 @@ for image_filename in os.listdir(image_folder):
                     bottom_right = (int(x + width / 2), int(y + height / 2))
                     cv2.rectangle(img, top_left, bottom_right, (0, 255, 0), 2)
 
-        # Save the modified image
-        output_image_path = os.path.join('output_folder', f'processed_{image_filename}')
-        cv2.imwrite(output_image_path, img)
+        cv2.imwrite("example_with_blur.jpg", img)
+
+if __name__ == "__main__":
+    model_path = 'best.pt'
+    image_path = 'C:/Users/PPiC/Downloads/PKLot.v2-640.yolov8/test/images/2012-09-11_15_53_00_jpg.rf.8282544a640a23df05bd245a9210e663.jpg'
+
+    processor = ImageProcessor(model_path, image_path)
+    processor.process()
