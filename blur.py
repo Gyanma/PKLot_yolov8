@@ -6,7 +6,7 @@ class ImageProcessor:
         self.model = YOLO(model_path)
         self.image_path = image_path
 
-    def process(self):
+    def pklot_busy(self):
         # Run batched inference on a list of images
         results = self.model([self.image_path])
 
@@ -29,7 +29,22 @@ class ImageProcessor:
                     blur_image = cv2.GaussianBlur(roi, (51, 51), 0)
 
                     img[blur_y:blur_y + blur_height, blur_x:blur_x + blur_width] = blur_image
-                else:
+
+        cv2.imwrite("example_with_blur.jpg", img)
+
+    def pklot_free(self):
+        # Run batched inference on a list of images
+        results = self.model([self.image_path])
+
+        # Load the image
+        img = cv2.imread(self.image_path)
+
+        # Process results list
+        for result in results:
+            for value, box in zip(result.boxes.cls, result.boxes.xywh):
+                x, y, width, height = box.tolist()
+
+                if value.item() == 0.:
                     # Draw bounding box
                     top_left = (int(x - width / 2), int(y - height / 2))
                     bottom_right = (int(x + width / 2), int(y + height / 2))
