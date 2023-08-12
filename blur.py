@@ -2,6 +2,7 @@ import cv2
 from ultralytics import YOLO
 
 class ImageProcessor:
+    #
     def __init__(self, model_path, image_path):
         self.model = YOLO(model_path)
         self.image_path = image_path
