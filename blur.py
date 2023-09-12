@@ -1,5 +1,6 @@
 import cv2
 from ultralytics import YOLO
+import sys
 
 class ImageProcessor:
     #
@@ -90,7 +91,6 @@ class ImageProcessor:
 
 if __name__ == "__main__":
     model_path = 'best.pt'
-    image_path = 'C:/Users/PPiC/Downloads/PKLot.v2-640.yolov8/test/images/2012-09-11_15_53_00_jpg.rf.8282544a640a23df05bd245a9210e663.jpg'
+    image_path = sys.path[0] + '/dataset/test/images/2012-09-12_10_05_57_jpg.rf.5f9542ab6498fd436eef35d5ac8f5c04.jpg'
 
     processor = ImageProcessor(model_path, image_path)
-    processor.process()
